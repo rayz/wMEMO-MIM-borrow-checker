@@ -5,7 +5,7 @@ Get alerts for available MIM to borrow with wMEMO as collateral
 # Installation
 1. Clone the repo 
 2. `npm install`
-3. `node index.js`
+3. `node index.js` (Can include optional arg for milliseconds to wait until refresh)
 
 Let the program run in the background.
 

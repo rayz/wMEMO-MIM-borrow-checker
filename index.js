@@ -3,6 +3,12 @@ const dappeteer = require('@chainsafe/dappeteer');
 const notifier = require('node-notifier');
 
 
+let args = process.argv.slice(2);
+let DELAY = 6000;
+if(args.length != 0) {
+   DELAY = Number(args[0]); 
+}
+
 async function main(){
     const browser = await dappeteer.launch(puppeteer, { metamaskVersion: 'v10.1.1', headless: false });
     const metamask = await dappeteer.setupMetamask(browser);
@@ -20,8 +26,8 @@ async function main(){
     await metamask.approve();
     await page.goto("https://abracadabra.money/stand");
     let prev = '0';
-    for (;;) {
-        await new Promise((r) => setTimeout(r, 6000));
+    while(true){
+        await new Promise((r) => setTimeout(r, DELAY));
         const wmemo = await page.waitForSelector('.stand-table-item:nth-of-type(5)');
         const quant = await wmemo.evaluate((w) => w.children[2].children[0].children[0].innerHTML);
         if(quant != '0' && quant != prev){
